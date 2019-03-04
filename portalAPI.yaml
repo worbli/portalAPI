@@ -10,17 +10,17 @@ info:
    email: "info@worbli.io"
 servers:
  - url: https://www.worbli.io/v1/
-   description: Production server
+   description: Production Server
  - url: https://uat.worbli.io/v1/
-   description: UAT server
+   description: Uuser Acceptance Server
  - url: https://dev.worbli.io/v1/
-   description: Dev server
+   description: Development Server
 paths:
  /visitor/signin/:
    post:
      tags:
      - Visitors
-     summary: "Logs user into the system"
+     summary: "Visitor signs into the portal"
      operationId: PortalLogin
      parameters:
      - name: email
@@ -44,7 +44,7 @@ paths:
    post:
      tags:
      - Visitors
-     summary: "User creates a portal account"
+     summary: "Visitor joins by creating a portal account"
      operationId: PortalJoin
      parameters:
      - name: email
@@ -80,7 +80,7 @@ paths:
    post:
      tags:
      - Visitors
-     summary: "User requests to reset password"
+     summary: "Visitor has forgotten their password"
      operationId: PortalForgot
      parameters:
      - name: email
@@ -95,11 +95,11 @@ paths:
        400:
          description: "Internal Error"
  /visitor/password/:
-   post:
+   put:
      tags:
      - Visitors
      summary: "User sets a new password"
-     operationId: PortalPassword
+     operationId: PutVisitorPassword
      parameters:
      - name: password
        in: query
@@ -112,12 +112,12 @@ paths:
          description: "successful operation"
        400:
          description: "Invalid password"
- /user/profile/{userid}:
+ /user/profile/{id}:
    get:
      tags:
      - User
      summary: "User gets their profile"
-     operationId: GetProfile
+     operationId: GetUserProfile
      parameters:
      - name: epassword
        in: query
@@ -134,8 +134,8 @@ paths:
    post:
      tags:
      - User
-     summary: "User gets their profile"
-     operationId: PostProfile
+     summary: "User saves their profile"
+     operationId: PostUserProfile
      parameters:
      - name: epassword
        in: query
@@ -153,7 +153,7 @@ paths:
      tags:
      - Identity
      summary: "Saves an image"
-     operationId: PostProfile
+     operationId: PostIdentityImage
      parameters:
      - name: epassword
        in: query
@@ -171,7 +171,7 @@ paths:
      tags:
      - Identity
      summary: "Gets an image"
-     operationId: PostProfile
+     operationId: GetIdentityImage
      parameters:
      - name: epassword
        in: query
@@ -189,7 +189,7 @@ paths:
      tags:
      - Identity
      summary: "Posts the users application"
-     operationId: PostProfile
+     operationId: PostIdentityApplication
      parameters:
      - name: epassword
        in: query
@@ -207,7 +207,7 @@ paths:
      tags:
      - Identity
      summary: "Gets the users application"
-     operationId: PostProfile
+     operationId: GetIdentityApplication
      parameters:
      - name: epassword
        in: query
@@ -225,7 +225,7 @@ paths:
      tags:
      - Identity
      summary: "Given a country returns the documents needed"
-     operationId: PostProfile
+     operationId: GetIdentityDocuments
      parameters:
      - name: epassword
        in: query
@@ -243,7 +243,7 @@ paths:
      tags:
      - Network
      summary: "Create a network account"
-     operationId: PostProfile
+     operationId: PostNetworkAccount
      parameters:
      - name: epassword
        in: query
@@ -261,7 +261,7 @@ paths:
      tags:
      - Network
      summary: "Check if an account name is available"
-     operationId: PostProfile
+     operationId: GetNetworkCheck
      parameters:
      - name: epassword
        in: query
@@ -279,7 +279,7 @@ paths:
      tags:
      - User
      summary: "Gets the users identity and network state"
-     operationId: PostProfile
+     operationId: GetUserState
      parameters:
      - name: epassword
        in: query
@@ -297,7 +297,7 @@ paths:
      tags:
      - Health
      summary: "Is the API ready/present"
-     operationId: PostProfile
+     operationId: GetHealthReady
      parameters:
      - name: epassword
        in: query
@@ -315,7 +315,7 @@ paths:
      tags:
      - Health
      summary: "Is the API serving requests"
-     operationId: PostProfile
+     operationId: GetHealthLive
      parameters:
      - name: epassword
        in: query
