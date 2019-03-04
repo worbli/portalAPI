@@ -37,7 +37,7 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
          description: "Invalid username or password"
  /visitor/join/:
@@ -73,7 +73,7 @@ paths:
          type: boolean
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
          description: "Invalid username or password"
  /visitor/forgot/:
@@ -91,7 +91,7 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
          description: "Internal Error"
  /visitor/password/:
@@ -109,9 +109,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /user/profile/{id}:
    get:
      tags:
@@ -127,9 +127,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /user/profile/:
    post:
      tags:
@@ -145,9 +145,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /identity/image/:
    post:
      tags:
@@ -163,9 +163,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /identity/image:
    get:
      tags:
@@ -181,9 +181,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /identity/application:
    post:
      tags:
@@ -199,9 +199,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /identity/application/:
    get:
      tags:
@@ -217,9 +217,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /identity/documents/{country}:
    get:
      tags:
@@ -235,9 +235,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /network/account/:
    post:
      tags:
@@ -253,9 +253,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /network/check/:
    get:
      tags:
@@ -271,9 +271,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /user/state/:
    get:
      tags:
@@ -289,9 +289,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /health/ready/:
    get:
      tags:
@@ -307,9 +307,9 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
  /health/live/:
    get:
      tags:
@@ -325,6 +325,6 @@ paths:
          type: string
      responses:
        200:
-         description: "successful operation"
+         description: "Successful operation"
        400:
-         description: "Invalid password"
+         description: "Invalid opperation"
