@@ -12,7 +12,7 @@ servers:
  - url: https://www.worbli.io/v1/
    description: Production Server
  - url: https://uat.worbli.io/v1/
-   description: Uuser Acceptance Server
+   description: User Acceptance Server
  - url: https://dev.worbli.io/v1/
    description: Development Server
 paths:
@@ -98,7 +98,7 @@ paths:
    put:
      tags:
      - Visitors
-     summary: "User sets a new password"
+     summary: "User saves a new password"
      operationId: PutVisitorPassword
      parameters:
      - name: password
@@ -224,7 +224,7 @@ paths:
    get:
      tags:
      - Identity
-     summary: "Given a country returns the documents needed"
+     summary: "Given a country returns the documents required"
      operationId: GetIdentityDocuments
      parameters:
      - name: epassword
@@ -278,7 +278,7 @@ paths:
    get:
      tags:
      - User
-     summary: "Gets the users identity and network state"
+     summary: "Gets the users state (Identity & Network)"
      operationId: GetUserState
      parameters:
      - name: epassword
