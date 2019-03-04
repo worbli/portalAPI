@@ -1,0 +1,330 @@
+openapi: "3.0.2"
+info:
+ title: "Worbli Portal API"
+ description: "API for account creation via KYC process"
+ version: "1.0"
+ termsOfService: "https://worbli.io/terms"
+ contact:
+   name: "Worbli Portal API"
+   url: "https://www.worbli.io/v1/"
+   email: "info@worbli.io"
+servers:
+ - url: https://www.worbli.io/v1/
+   description: Production server
+ - url: https://uat.worbli.io/v1/
+   description: UAT server
+ - url: https://dev.worbli.io/v1/
+   description: Dev server
+paths:
+ /visitor/signin/:
+   post:
+     tags:
+     - Visitors
+     summary: "Logs user into the system"
+     operationId: PortalLogin
+     parameters:
+     - name: email
+       in: query
+       description: "**The email address for login**"
+       required: true
+       schema:
+         type: string
+     - name: password
+       in: query
+       description: "**The password for login in clear text**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid username or password"
+ /visitor/join/:
+   post:
+     tags:
+     - Visitors
+     summary: "User creates a portal account"
+     operationId: PortalJoin
+     parameters:
+     - name: email
+       in: query
+       description: "**The email for login**"
+       required: true
+       schema:
+         type: string
+     - name: password
+       in: query
+       description: "**The password for login**"
+       required: true
+       schema:
+         type: string
+     - name: agreeTerms
+       in: query
+       description: "**The user has agreed to the Terms and Privacy Policy**"
+       required: true
+       schema:
+         type: boolean
+     - name: agreeMarketing
+       in: query
+       description: "**The user has agreed to recieve marketing communication**"
+       required: true
+       schema:
+         type: boolean
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid username or password"
+ /visitor/forgot/:
+   post:
+     tags:
+     - Visitors
+     summary: "User requests to reset password"
+     operationId: PortalForgot
+     parameters:
+     - name: email
+       in: query
+       description: "**The email for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Internal Error"
+ /visitor/password/:
+   post:
+     tags:
+     - Visitors
+     summary: "User sets a new password"
+     operationId: PortalPassword
+     parameters:
+     - name: password
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /user/profile/{userid}:
+   get:
+     tags:
+     - User
+     summary: "User gets their profile"
+     operationId: GetProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /user/profile/:
+   post:
+     tags:
+     - User
+     summary: "User gets their profile"
+     operationId: PostProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /identity/image/:
+   post:
+     tags:
+     - Identity
+     summary: "Saves an image"
+     operationId: PostProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /identity/image:
+   get:
+     tags:
+     - Identity
+     summary: "Gets an image"
+     operationId: PostProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /identity/application:
+   post:
+     tags:
+     - Identity
+     summary: "Posts the users application"
+     operationId: PostProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /identity/application/:
+   get:
+     tags:
+     - Identity
+     summary: "Gets the users application"
+     operationId: PostProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /identity/documents/{country}:
+   get:
+     tags:
+     - Identity
+     summary: "Given a country returns the documents needed"
+     operationId: PostProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /network/account/:
+   post:
+     tags:
+     - Network
+     summary: "Create a network account"
+     operationId: PostProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /network/check/:
+   get:
+     tags:
+     - Network
+     summary: "Check if an account name is available"
+     operationId: PostProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /user/state/:
+   get:
+     tags:
+     - User
+     summary: "Gets the users identity and network state"
+     operationId: PostProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /health/ready/:
+   get:
+     tags:
+     - Health
+     summary: "Is the API ready/present"
+     operationId: PostProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
+ /health/live/:
+   get:
+     tags:
+     - Health
+     summary: "Is the API serving requests"
+     operationId: PostProfile
+     parameters:
+     - name: epassword
+       in: query
+       description: "**The new password for login**"
+       required: true
+       schema:
+         type: string
+     responses:
+       200:
+         description: "successful operation"
+       400:
+         description: "Invalid password"
