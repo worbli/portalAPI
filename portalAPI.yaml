@@ -94,10 +94,10 @@ paths:
          description: "successful operation"
        400:
          description: "Internal Error"
- /visitor/password/:
+ /user/password/:
    put:
      tags:
-     - Visitors
+     - User
      summary: "User sets a new password"
      operationId: PutVisitorPassword
      parameters:
@@ -148,12 +148,12 @@ paths:
          description: "successful operation"
        400:
          description: "Invalid password"
- /identity/image/:
+ /user/verify/:
    post:
      tags:
-     - Identity
-     summary: "Saves an image"
-     operationId: PostIdentityImage
+     - User
+     summary: "User verifies email address"
+     operationId: PostUserProfile
      parameters:
      - name: epassword
        in: query
@@ -166,12 +166,12 @@ paths:
          description: "successful operation"
        400:
          description: "Invalid password"
- /identity/image:
-   get:
+ /identity/image/:
+   post:
      tags:
      - Identity
-     summary: "Gets an image"
-     operationId: GetIdentityImage
+     summary: "Saves an image"
+     operationId: PostIdentityImage
      parameters:
      - name: epassword
        in: query
@@ -202,7 +202,7 @@ paths:
          description: "successful operation"
        400:
          description: "Invalid password"
- /identity/application/:
+ /identity/application/{id}:
    get:
      tags:
      - Identity
@@ -256,7 +256,7 @@ paths:
          description: "successful operation"
        400:
          description: "Invalid password"
- /network/check/:
+ /network/check/{name}:
    get:
      tags:
      - Network
@@ -274,7 +274,7 @@ paths:
          description: "successful operation"
        400:
          description: "Invalid password"
- /user/state/:
+ /user/state/{id}:
    get:
      tags:
      - User
@@ -292,7 +292,7 @@ paths:
          description: "successful operation"
        400:
          description: "Invalid password"
- /health/ready/:
+ /health/ready/{epoch}:
    get:
      tags:
      - Health
@@ -310,7 +310,7 @@ paths:
          description: "successful operation"
        400:
          description: "Invalid password"
- /health/live/:
+ /health/live/{epoch}:
    get:
      tags:
      - Health
