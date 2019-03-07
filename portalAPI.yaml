@@ -1,338 +1,720 @@
-openapi: "3.0.2"
+openapi: "3.0.0"
 info:
- title: "Worbli Portal API"
- description: "API for account creation via KYC process"
- version: "1.0"
- termsOfService: "https://worbli.io/terms"
- contact:
-   name: "Worbli Portal API"
-   url: "https://www.worbli.io/v1/"
-   email: "info@worbli.io"
+  version: 1.0.0
+  title: Worbli API
+  description: Worbli Portal API
+  termsOfService: http://worbli.io/terms/
+  contact:
+    name: Worbli API Team
+    email: info@worbli.io
+    url: http://worbli.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
-  - url: '{protocol}://{{environment}}/api/v3/'
+  - url: '{Protocol}://{Environment}/api/{Version}'
     variables:
-      protocol:
+      Protocol:
         enum:
           - http
           - https
         default: https
-      environment:
-        enum:
-          - www.worbli.io
-          - uat.worbli.io
-          - dev.worbli.io
-          - localhost:9000
-        default: www.worbli.io
+      Environment:
+          enum:
+            - dev.worbli.io
+            - uat.worbli.io
+            - localhost:9000
+          default: dev.worbli.io
+      Version:
+          enum:
+            - v1
+            - v2
+            - v3
+          default: v3
 paths:
- /visitor/signin/:
-   post:
-     tags:
-     - Visitors
-     summary: "Visitor signs into the portal"
-     operationId: PortalLogin
-     parameters:
-     - name: email
-       in: query
-       description: "**The email address for login**"
-       required: true
-       schema:
-         type: string
-     - name: password
-       in: query
-       description: "**The password for login in clear text**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid username or password"
- /visitor/join/:
-   post:
-     tags:
-     - Visitors
-     summary: "Visitor joins by creating a portal account"
-     operationId: PortalJoin
-     parameters:
-     - name: email
-       in: query
-       description: "**The email for login**"
-       required: true
-       schema:
-         type: string
-     - name: password
-       in: query
-       description: "**The password for login**"
-       required: true
-       schema:
-         type: string
-     - name: agreeTerms
-       in: query
-       description: "**The user has agreed to the Terms and Privacy Policy**"
-       required: true
-       schema:
-         type: boolean
-     - name: agreeMarketing
-       in: query
-       description: "**The user has agreed to recieve marketing communication**"
-       required: true
-       schema:
-         type: boolean
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid username or password"
- /visitor/forgot/:
-   post:
-     tags:
-     - Visitors
-     summary: "Visitor has forgotten their password"
-     operationId: PortalForgot
-     parameters:
-     - name: email
-       in: query
-       description: "**The email for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Internal Error"
- /user/password/:
-   put:
-     tags:
-     - User
-     summary: "User sets a new password"
-     operationId: PutVisitorPassword
-     parameters:
-     - name: password
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /user/profile/{id}:
-   get:
-     tags:
-     - User
-     summary: "User gets their profile"
-     operationId: GetUserProfile
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /user/profile/:
-   post:
-     tags:
-     - User
-     summary: "User saves their profile"
-     operationId: PostUserProfile
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /user/verify/:
-   post:
-     tags:
-     - User
-     summary: "User verifies email address"
-     operationId: PostUserProfile
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /identity/image/:
-   post:
-     tags:
-     - Identity
-     summary: "Saves an image"
-     operationId: PostIdentityImage
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /identity/application:
-   post:
-     tags:
-     - Identity
-     summary: "Posts the users application"
-     operationId: PostIdentityApplication
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /identity/application/{id}:
-   get:
-     tags:
-     - Identity
-     summary: "Gets the users application"
-     operationId: GetIdentityApplication
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /identity/documents/{country}:
-   get:
-     tags:
-     - Identity
-     summary: "Given a country returns the documents needed"
-     operationId: GetIdentityDocuments
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /network/account/:
-   post:
-     tags:
-     - Network
-     summary: "Create a network account"
-     operationId: PostNetworkAccount
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /network/check/{name}:
-   get:
-     tags:
-     - Network
-     summary: "Check if an account name is available"
-     operationId: GetNetworkCheck
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /user/state/{id}:
-   get:
-     tags:
-     - User
-     summary: "Gets the users identity and network state"
-     operationId: GetUserState
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /health/ready/{epoch}:
-   get:
-     tags:
-     - Health
-     summary: "Is the API ready/present"
-     operationId: GetHealthReady
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
- /health/live/{epoch}:
-   get:
-     tags:
-     - Health
-     summary: "Is the API serving requests"
-     operationId: GetHealthLive
-     parameters:
-     - name: epassword
-       in: query
-       description: "**The new password for login**"
-       required: true
-       schema:
-         type: string
-     responses:
-       200:
-         description: "successful operation"
-       400:
-         description: "Invalid password"
+  /visitor/signin:
+    post:
+      tags:
+        - Visitors
+      requestBody:
+        description: Login credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+              properties:
+                email: 
+                  type: string
+                password:
+                  type: string
+            example:
+              email: test@worbli.io
+              password: password1234!
+
+      responses:
+        '200':
+          description: login response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - email
+                  - state
+                properties:
+                  data: 
+                    type: boolean
+                  email:
+                    type: string
+                  state:
+                    type: object
+                  
+              example:
+                data: true
+                email: test@worbli.io
+                state: 
+                  identity: 'notSubmitted'
+                  netowrk: 'noAccess'
+        '400':
+          description: fail response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /visitor/join:
+    post:
+      tags:
+        - Visitors
+      requestBody:
+        description: Join credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+                - terms
+                - marketing
+              properties:
+                email: 
+                  type: string
+                password:
+                  type: string
+                terms:
+                  type: boolean
+                marketing:
+                  type: boolean
+            example:
+              email: test@worbli.io
+              password: password1234!
+              terms: true
+              marketing: false
+      responses:
+        '200':
+          description: join response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: join response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /visitor/forgot:
+    post:
+      tags:
+        - Visitors
+      requestBody:
+        description: Visitor forgot password
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+              properties:
+                email: 
+                  type: string
+            example:
+              email: test@worbli.io
+      responses:
+        '200':
+          description: forgot password response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: forgot password response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /user/password:
+    put:
+      tags:
+        - User
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      requestBody:
+        description: User sets a new password
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - password
+              properties:
+                password: 
+                  type: string
+            example:
+              password: password1234!
+      responses:
+        '200':
+          description: new password response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: new password response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /user/profile/{id}:
+    get:
+      tags:
+        - User
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+        - in: path
+          name: id
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: new password response
+          content:
+            application/json:
+              schema:
+                required:
+                  - email
+                properties:
+                  email: 
+                    type: string
+              example:
+                email: test@worbli.io
+
+        '400':
+          description: new password response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /user/profile:
+    post:
+      tags:
+        - User
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+      requestBody:
+        description: User saves their profile
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+                - newPassword
+              properties:
+                email: 
+                  type: string
+                password:
+                  type: string
+                newPassword:
+                  type: boolean
+            example:
+              email: test@worbli.io
+              password: password1234!
+              newPassword: newPassword1234!
+
+      responses:
+        '200':
+          description: save profile response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: save profile response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /user/verify:
+    post:
+      tags:
+        - User
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /identity/image:
+  # todo: add image upload
+    post:
+      tags:
+        - Identity
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /identity/application:
+    # todo: add json in requestBody
+    post:
+      tags:
+        - Identity
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /identity/documents:
+    # todo: add country paremeter in header
+    get:
+      tags:
+        - Identity
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /network/account:
+    # todo: add country paremeter in header
+    post:
+      tags:
+        - Network
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /network/check:
+    # todo: add name paremeter in header
+    post:
+      tags:
+        - Network
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /user/state:
+    # todo: add id paremeter in header
+    get:
+      tags:
+        - User
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /health/ready:
+    # todo: fix this up
+    get:
+      tags:
+        - Health
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /health/live:
+    # todo: fix this up
+    get:
+      tags:
+        - Health
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: verify email response
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
