@@ -9,12 +9,20 @@ info:
    url: "https://www.worbli.io/v1/"
    email: "info@worbli.io"
 servers:
- - url: https://www.worbli.io/v1/
-   description: Production Server
- - url: https://uat.worbli.io/v1/
-   description: Uuser Acceptance Server
- - url: https://dev.worbli.io/v1/
-   description: Development Server
+  - url: '{protocol}://{{environment}}/api/v3/'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: https
+      environment:
+        enum:
+          - www.worbli.io
+          - uat.worbli.io
+          - dev.worbli.io
+          - localhost:9000
+        default: www.worbli.io
 paths:
  /visitor/signin/:
    post:
