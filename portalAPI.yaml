@@ -636,6 +636,92 @@ paths:
                     type: boolean
               example:
                 data: false
+
+
+
+  /mobile/sms:
+    # todo: add name paremeter in header
+    post:
+      tags:
+        - Mobile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: sms sent recipt
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: sms sent recipt
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+  /mobile/shortcode:
+    get:
+      tags:
+        - Mobile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: get shortcode
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: true
+
+        '400':
+          description: get shortcode
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+              example:
+                data: false
+
+        
   /health/ready:
     # todo: fix this up
     get:
