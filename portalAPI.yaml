@@ -21,10 +21,10 @@ servers:
         default: https
       Environment:
           enum:
-            - dev.worbli.io
-            - uat.worbli.io
+            - dev-api.worbli.io
+            - uat-api.worbli.io
             - localhost:9000
-          default: dev.worbli.io
+          default: dev-api.worbli.io
       Version:
           enum:
             - v1
