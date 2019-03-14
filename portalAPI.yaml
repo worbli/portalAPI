@@ -56,40 +56,74 @@ paths:
 
       responses:
         '200':
-          description: login response
+          description: login success
           content:
             application/json:
               schema:
                 required:
                   - data
-                  - email
-                  - state
+                  - token
                 properties:
                   data: 
                     type: boolean
-                  email:
+                  token:
                     type: string
-                  state:
-                    type: object
-                  
+
               example:
                 data: true
-                email: test@worbli.io
-                state: 
-                  identity: 'notSubmitted'
-                  netowrk: 'noAccess'
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c  
         '400':
-          description: fail response
+          description: bad request
+          content:
+            application/json:
+              schema:
+                required:
+                  - status
+                  - statusText
+                  - errors
+                properties:
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
+              example:
+                status: 400
+                statusText: "Bad Request"
+                errors: [{"field":["email"],"location":"body","messages":["\"email\" must be a valid email"],"types":["string.email"]}]
+        '409':
+          description: user not verified
           content:
             application/json:
               schema:
                 required:
                   - data
+                  - error
                 properties:
                   data: 
                     type: boolean
+                  error:
+                    type: string
               example:
                 data: false
+                error: "Please verify your email first"
+        '401':
+          description: login failed
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: "Authentication error!"
   /visitor/join:
     post:
       tags:
@@ -104,7 +138,6 @@ paths:
                 - email
                 - password
                 - terms
-                - marketing
               properties:
                 email: 
                   type: string
@@ -121,7 +154,7 @@ paths:
               marketing: false
       responses:
         '200':
-          description: join response
+          description: join successful
           content:
             application/json:
               schema:
@@ -132,19 +165,46 @@ paths:
                     type: boolean
               example:
                 data: true
-
         '400':
-          description: join response
+          description: bad request
           content:
             application/json:
               schema:
                 required:
                   - data
+                  - status
+                  - statusText
+                  - errors
                 properties:
                   data: 
                     type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
               example:
                 data: false
+                status: 400
+                statusText: "Bad Request"
+                errors: [{"field":["agreedTerms"],"location":"body","messages":["\"agreedTerms\" must be one of [true]"],"types":["any.allowOnly"]}]
+        '500':
+          description: internal server failure
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: Failed to send a verify email to test@worbli.io
   /visitor/forgot:
     post:
       tags:
@@ -164,7 +224,7 @@ paths:
               email: test@worbli.io
       responses:
         '200':
-          description: forgot password response
+          description: password reset process initiated
           content:
             application/json:
               schema:
@@ -175,19 +235,46 @@ paths:
                     type: boolean
               example:
                 data: true
-
         '400':
-          description: forgot password response
+          description: bad request
           content:
             application/json:
               schema:
                 required:
                   - data
+                  - status
+                  - statusText
+                  - errors
                 properties:
                   data: 
                     type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
               example:
                 data: false
+                status: 400
+                statusText: Bad Request
+                errors: [{"field":["agreedTerms"],"location":"body","messages":["\"agreedTerms\" must be one of [true]"],"types":["any.allowOnly"]}]
+        '500':
+          description: internal server failure
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: Failed to send a password reset email to test@worbli.io
   /user/password:
     put:
       tags:
@@ -803,4 +890,4 @@ paths:
                   data: 
                     type: boolean
               example:
-                data: false
+                data: false 
