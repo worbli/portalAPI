@@ -189,6 +189,22 @@ paths:
                 status: 400
                 statusText: "Bad Request"
                 errors: [{"field":["agreedTerms"],"location":"body","messages":["\"agreedTerms\" must be one of [true]"],"types":["any.allowOnly"]}]
+        '409':
+          description: user joined but not verified
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: "You have already created your account - check your mailbox for activation instructions."
         '500':
           description: internal server failure
           content:
