@@ -205,6 +205,22 @@ paths:
               example:
                 data: false
                 error: "You have already created your account - check your mailbox for activation instructions."
+        '412':
+          description: user already joined and verified
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: "You have already created your account."
         '500':
           description: internal server failure
           content:
@@ -295,55 +311,96 @@ paths:
     put:
       tags:
         - User
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer jwtToken
-          schema:
-            type: string
-          example:
-            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
-          required: true
-
       requestBody:
-        description: User sets a new password
+        description: User resets the password
         required: true
         content:
           application/json:
             schema:
               required:
                 - password
+                - token
               properties:
                 password: 
                   type: string
+                token:
+                  type: string
             example:
               password: password1234!
+              token: cc2b039697793f4f38aa908f07fd2974
       responses:
         '200':
-          description: new password response
+          description: password successfully changed response
           content:
             application/json:
               schema:
                 required:
                   - data
+                  - token
                 properties:
                   data: 
                     type: boolean
+                  token:
+                    type: string
               example:
                 data: true
-
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
         '400':
-          description: new password response
+          description: bad request
           content:
             application/json:
               schema:
                 required:
                   - data
+                  - status
+                  - statusText
+                  - errors
                 properties:
                   data: 
                     type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
               example:
                 data: false
+                status: 400
+                statusText: Bad Request
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["token"],"location":"body","messages":["Invalid token"],"types":["any.required"]}]}
+        '401':
+          description: unauthorized request (wrong token provided)
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: Wrong token provided
+        '500':
+          description: internal server failure
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: Internal error, please try again later
   /user/profile/{id}:
     get:
       tags:
@@ -457,15 +514,23 @@ paths:
     post:
       tags:
         - User
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer jwtToken
-          schema:
-            type: string
-          example:
-            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
-          required: true
+      requestBody:
+        description: Visitor verifies email address
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - token
+              properties:
+                email: 
+                  type: string
+                token:
+                  type: string
+            example:
+              email: test@worbli.io
+              token: cc2b039697793f4f38aa908f07fd2974
 
       responses:
         '200':
@@ -475,12 +540,15 @@ paths:
               schema:
                 required:
                   - data
+                  - token
                 properties:
                   data: 
                     type: boolean
+                  token:
+                    type: string
               example:
                 data: true
-
+                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
         '400':
           description: verify email response
           content:
@@ -906,4 +974,4 @@ paths:
                   data: 
                     type: boolean
               example:
-                data: false 
+                data: false   
