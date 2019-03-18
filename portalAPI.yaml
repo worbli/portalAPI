@@ -561,6 +561,110 @@ paths:
                     type: boolean
               example:
                 data: false
+  /user/resendverify:
+    post:
+      tags:
+        - User
+      requestBody:
+        description: Resends the verification email
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+              properties:
+                email: 
+                  type: string
+            example:
+              email: test@worbli.io
+      responses:
+        '200':
+          description: verify email sent
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                properties:
+                  data: 
+                    type: boolean
+                  token:
+                    type: string
+              example:
+                data: true
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - status
+                  - statusText
+                  - errors
+                properties:
+                  data: 
+                    type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
+              example:
+                data: false
+                status: 400
+                statusText: Bad Request
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["email"],"location":"body","messages":["\"email\" is required"],"types":["any.required"]}]}
+        '401':
+          description: unauthorized request (wrong email provided)
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: Please check the email address
+        '412':
+          description: email address already verified
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: The email address has already been verified
+        '500':
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: An internal error has occurred. Please try again later.
   /identity/image:
   # todo: add image upload
     post:
