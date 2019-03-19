@@ -860,7 +860,7 @@ paths:
               example:
                 data: false
   /network/check:
-    # todo: add name paremeter in header
+    # todo: add name parameter in header
     post:
       tags:
         - Network
@@ -873,10 +873,22 @@ paths:
           example:
             Authorization: Bearer jwttoken.sdfsdf.sdfsdf
           required: true
-
+      requestBody:
+        description: Checks whether the network name is available
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - accountName
+              properties:
+                email: 
+                  type: string
+            example:
+              email: myFunkyWorbliName
       responses:
         '200':
-          description: verify email response
+          description: The network name exists
           content:
             application/json:
               schema:
@@ -888,8 +900,8 @@ paths:
               example:
                 data: true
 
-        '400':
-          description: verify email response
+        '404':
+          description: The network name does not exist
           content:
             application/json:
               schema:
@@ -900,6 +912,22 @@ paths:
                     type: boolean
               example:
                 data: false
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: Internal error, please try again later
   /user/state:
     # todo: add id paremeter in header
     get:
