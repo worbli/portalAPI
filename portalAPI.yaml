@@ -469,7 +469,6 @@ paths:
           application/json:
             schema:
               required:
-                - email
                 - password
                 - newPassword
               properties:
@@ -486,30 +485,61 @@ paths:
 
       responses:
         '200':
-          description: save profile response
+          description: Profile saved successfully
           content:
             application/json:
               schema:
                 required:
                   - data
+                  - jwt
                 properties:
                   data: 
                     type: boolean
+                  jwt:
+                    type: string
               example:
                 data: true
-
+                jwt: veklhr93849f033ff.ggo39ut3to9bjh389g3.gg095ug90vv390f
         '400':
-          description: save profile response
+          description: bad request
           content:
             application/json:
               schema:
                 required:
                   - data
+                  - status
+                  - statusText
+                  - errors
                 properties:
                   data: 
                     type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
               example:
                 data: false
+                status: 400
+                statusText: Bad Request
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["password"],"location":"body","messages":["\"password\" is required"],"types":["any.required"]}]}
+        '409':
+          description: user not verified
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: "Please verify your email first"
   /user/verify:
     post:
       tags:
