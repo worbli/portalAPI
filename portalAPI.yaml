@@ -819,8 +819,8 @@ paths:
               example:
                 data: false
   /network/account:
-    # todo: add country paremeter in header
     post:
+      summary: Reserves a network name for the user and starts the approval process
       tags:
         - Network
       parameters:
@@ -832,10 +832,30 @@ paths:
           example:
             Authorization: Bearer jwttoken.sdfsdf.sdfsdf
           required: true
-
+      requestBody:
+        description: Resends the verification email
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - accountName
+                - publicKeyActive
+                - publicKeyOwner
+              properties:
+                accountName: 
+                  type: string
+                publicKeyActive:
+                  type: string
+                publicKeyOwner:
+                  type: string
+            example:
+              accountName: myFunkyName
+              publicKeyActive: lifrxwiefmowe
+              publicKeyOwner: erlijxfeiowrrxw
       responses:
         '200':
-          description: verify email response
+          description: Network account name reserved, approval process started
           content:
             application/json:
               schema:
@@ -844,21 +864,43 @@ paths:
                 properties:
                   data: 
                     type: boolean
+                  error:
+                    type: string
               example:
                 data: true
 
         '400':
-          description: verify email response
+          description: The account name is occupied or the user is not yet KYCed
           content:
             application/json:
               schema:
                 required:
                   - data
+                  - error
                 properties:
                   data: 
                     type: boolean
+                  error:
+                    type: string
               example:
                 data: false
+                error: The requested account name is not available. Please choose another one.
+        '500':
+          description: Internal server error - the user must retry the operation at a later time
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: Creating the network account failed, please try again later
   /network/check/{accountName}:
     get:
       summary: Checks whether the network name is available
