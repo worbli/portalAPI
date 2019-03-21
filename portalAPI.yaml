@@ -1,6 +1,6 @@
 openapi: "3.0.0"
 info:
-  version: 1.0.0
+  version: "1"
   title: Worbli API
   description: Worbli Portal API
   termsOfService: http://worbli.io/terms/
@@ -859,9 +859,9 @@ paths:
                     type: boolean
               example:
                 data: false
-  /network/check:
-    # todo: add name parameter in header
-    post:
+  /network/check/{accountName}:
+    get:
+      summary: Checks whether the network name is available
       tags:
         - Network
       parameters:
@@ -873,22 +873,17 @@ paths:
           example:
             Authorization: Bearer jwttoken.sdfsdf.sdfsdf
           required: true
-      requestBody:
-        description: Checks whether the network name is available
-        required: true
-        content:
-          application/json:
-            schema:
-              required:
-                - accountName
-              properties:
-                email: 
-                  type: string
-            example:
-              email: myFunkyWorbliName
+        - in: path
+          name: accountName
+          schema:
+            type: string
+          required: true
+          description: The network name to be checked
+          example:
+            email: myFunkyName
       responses:
         '200':
-          description: The network name exists
+          description: The check succeeded - the 'data' property specifies if the name was found
           content:
             application/json:
               schema:
@@ -899,19 +894,6 @@ paths:
                     type: boolean
               example:
                 data: true
-
-        '404':
-          description: The network name does not exist
-          content:
-            application/json:
-              schema:
-                required:
-                  - data
-                properties:
-                  data: 
-                    type: boolean
-              example:
-                data: false
         '500':
           description: Internal server error
           content:
@@ -1136,4 +1118,4 @@ paths:
                   data: 
                     type: boolean
               example:
-                data: false   
+                data: false
