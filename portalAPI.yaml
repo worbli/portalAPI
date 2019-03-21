@@ -696,8 +696,8 @@ paths:
                 data: false
                 error: An internal error has occurred. Please try again later.
   /identity/image:
-  # todo: add image upload
     post:
+      summary: Accepts the user's verification images
       tags:
         - Identity
       parameters:
@@ -709,10 +709,22 @@ paths:
           example:
             Authorization: Bearer jwttoken.sdfsdf.sdfsdf
           required: true
-
+      requestBody:
+        required: true
+        description: Contains the files to be uploadded
+        content:
+          application/json:
+            schema:
+              required:
+                - file1
+              properties:
+                file1: 
+                  type: object
+            example:
+              file1: some file
       responses:
         '200':
-          description: verify email response
+          description: file uploaded successfully
           content:
             application/json:
               schema:
@@ -723,9 +735,8 @@ paths:
                     type: boolean
               example:
                 data: true
-
-        '400':
-          description: verify email response
+        '500':
+          description: Internal server error
           content:
             application/json:
               schema:
