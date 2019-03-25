@@ -730,11 +730,59 @@ paths:
               schema:
                 required:
                   - data
+                  - completed
+                  - missingDocuments
                 properties:
                   data: 
                     type: boolean
+                  completed:
+                    type: boolean
+                  missingDocuments:
+                    type: array
               example:
                 data: true
+                completed: false
+                missingDocuments: ['identity']
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - status
+                  - statusText
+                  - errors
+                properties:
+                  data: 
+                    type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
+              example:
+                data: false
+                status: 400
+                statusText: Bad Request
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["email"],"location":"body","messages":["\"token\" is required"],"types":["any.required"]}]}
+        '401':
+          description: unauthorized request (wrong token provided)
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: 'Authentication failed: credentials wrong or missing.'
         '500':
           description: Internal server error
           content:
@@ -747,6 +795,94 @@ paths:
                     type: boolean
               example:
                 data: false
+  /identity/missingimages:
+    post:
+      summary: Checks the completeness of the user's verification process
+      tags:
+        - Identity
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+      requestBody:
+        required: true
+        description: Contains the files to be uploadded
+        content:
+          application/json:
+            schema:
+              required:
+                - file1
+              properties:
+                file1: 
+                  type: object
+            example:
+              file1: some file
+      responses:
+        '200':
+          description: The check was successful
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - completed
+                  - missingDocuments
+                properties:
+                  data: 
+                    type: boolean
+                  completed:
+                    type: boolean
+                  missingDocuments:
+                    type: array
+              example:
+                data: true
+                completed: false
+                missingDocuments: ['identity']
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - status
+                  - statusText
+                  - errors
+                properties:
+                  data: 
+                    type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
+              example:
+                data: false
+                status: 400
+                statusText: Bad Request
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["email"],"location":"body","messages":["\"token\" is required"],"types":["any.required"]}]}
+        '401':
+          description: unauthorized request (wrong token provided)
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: 'Authentication failed: credentials wrong or missing.'
   /identity/application:
     # todo: add json in requestBody
     post:
