@@ -540,6 +540,82 @@ paths:
               example:
                 data: false
                 error: "Please verify your email first"
+  /user/state:
+    post:
+      summary: User gets the state of their KYC application
+      tags:
+        - User
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+
+      responses:
+        '200':
+          description: Profile saved successfully
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - status
+                  - errored
+                properties:
+                  data: 
+                    type: boolean
+                  status:
+                    type: string
+                  errored:
+                    type: boolean
+              example:
+                data: true
+                status: pending
+                errored: false
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - status
+                  - statusText
+                  - errors
+                properties:
+                  data: 
+                    type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
+              example:
+                data: false
+                status: 400
+                statusText: Bad Request
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["authorization"],"location":"headers","messages":["Invalid token"],"types":["any.required"]}]}
+        '401':
+          description: unauthorized request (wrong credentials)
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: "Authentication failed: credentials wrong or missing."
   /user/verify:
     post:
       tags:
@@ -1099,50 +1175,6 @@ paths:
               example:
                 data: false
                 error: Internal error, please try again later
-  /user/state:
-    # todo: add id paremeter in header
-    get:
-      tags:
-        - User
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer jwtToken
-          schema:
-            type: string
-          example:
-            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
-          required: true
-
-      responses:
-        '200':
-          description: verify email response
-          content:
-            application/json:
-              schema:
-                required:
-                  - data
-                properties:
-                  data: 
-                    type: boolean
-              example:
-                data: true
-
-        '400':
-          description: verify email response
-          content:
-            application/json:
-              schema:
-                required:
-                  - data
-                properties:
-                  data: 
-                    type: boolean
-              example:
-                data: false
-
-
-
   /mobile/sms:
     # todo: add name paremeter in header
     post:
