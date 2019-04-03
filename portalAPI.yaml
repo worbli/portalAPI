@@ -808,6 +808,7 @@ paths:
                   - data
                   - completed
                   - missingDocuments
+                  - rejectedDocuments
                 properties:
                   data: 
                     type: boolean
@@ -815,10 +816,13 @@ paths:
                     type: boolean
                   missingDocuments:
                     type: array
+                  rejectedDocuments:
+                    type: array
               example:
                 data: true
                 completed: false
                 missingDocuments: ['identity']
+                rejectedDocuments: ['selfie']
         '400':
           description: bad request
           content:
