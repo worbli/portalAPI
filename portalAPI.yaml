@@ -62,16 +62,19 @@ paths:
               schema:
                 required:
                   - data
-                  - token
+                  - jwt
+                  - worbliAccountName
                 properties:
                   data: 
                     type: boolean
-                  token:
+                  jwt:
                     type: string
-
+                  worbliAccountName:
+                    type: string
               example:
                 data: true
-                token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c  
+                jwt: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                worbliAccountName: myWorbliNetworkName
         '400':
           description: bad request
           content:
@@ -565,6 +568,7 @@ paths:
                   - data
                   - status
                   - errored
+                  - worbliAccountName
                 properties:
                   data: 
                     type: boolean
@@ -572,10 +576,13 @@ paths:
                     type: string
                   errored:
                     type: boolean
+                  worbliAccountName:
+                    type: string
               example:
                 data: true
                 status: pending
                 errored: false
+                worbliAccountName: myWorbliNetworkName
         '400':
           description: bad request
           content:
