@@ -882,6 +882,88 @@ paths:
                     type: boolean
               example:
                 data: false
+    delete:
+      summary: Deletes an uploaded image
+      tags:
+        - Identity
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+        - in: path
+          name: doctype
+          description: The document type to be deleted
+          schema:
+            type: string
+          example:
+            doctype: passport
+          required: true
+      responses:
+        '200':
+          description: The document was successfully
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - completed
+                  - missingDocuments
+                properties:
+                  data: 
+                    type: boolean
+                  completed:
+                    type: boolean
+                  missingDocuments:
+                    type: array
+              example:
+                data: true
+                completed: false
+                missingDocuments: ['identity']
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - status
+                  - statusText
+                  - errors
+                properties:
+                  data: 
+                    type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
+              example:
+                data: false
+                status: 400
+                statusText: Bad Request
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["email"],"location":"body","messages":["\"token\" is required"],"types":["any.required"]}]}
+        '401':
+          description: unauthorized request (wrong token provided)
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data: 
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: 'Authentication failed: credentials wrong or missing.'
   /identity/missingimages:
     post:
       summary: Checks the completeness of the user's verification process
