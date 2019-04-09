@@ -897,15 +897,15 @@ paths:
           required: true
         - in: path
           name: doctype
-          description: The document type to be deleted
+          description: The document type to be deleted, as in /identity/image/{US_passport}
           schema:
             type: string
           example:
-            doctype: passport
+            /identity/image/{US_passport}
           required: true
       responses:
         '200':
-          description: The document was successfully
+          description: The document was successfully deleted
           content:
             application/json:
               schema:
