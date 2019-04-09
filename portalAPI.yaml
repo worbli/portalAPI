@@ -980,7 +980,7 @@ paths:
           required: true
       requestBody:
         required: true
-        description: Contains the files to be uploadded
+        description: Contains the files to be uploaded
         content:
           application/json:
             schema:
@@ -1269,8 +1269,8 @@ paths:
                 data: false
                 error: Internal error, please try again later
   /mobile/sms:
-    # todo: add name paremeter in header
     post:
+      summary: Sends an SMS to a mobile number
       tags:
         - Mobile
       parameters:
@@ -1282,10 +1282,26 @@ paths:
           example:
             Authorization: Bearer jwttoken.sdfsdf.sdfsdf
           required: true
-
+      requestBody:
+        description: contains the number to send to, and the text to send out
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - number
+                - message
+              properties:
+                number: 
+                  type: string
+                text:
+                  type: string
+            example:
+              number: '+15551234567'
+              message: Hello, world!
       responses:
         '200':
-          description: sms sent recipt
+          description: SMS successfully sent
           content:
             application/json:
               schema:
@@ -1296,21 +1312,49 @@ paths:
                     type: boolean
               example:
                 data: true
-
         '400':
-          description: sms sent recipt
+          description: bad request - input data missing
           content:
             application/json:
               schema:
                 required:
                   - data
+                  - status
+                  - statusText
+                  - errors
                 properties:
                   data: 
                     type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
               example:
                 data: false
+                status: 400
+                statusText: Bad Request
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["email"],"location":"body","messages":["\"token\" is required"],"types":["any.required"]}]}
+        '500':
+          description: One of the internal services failed
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data:
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: 'Failed to send out the SMS, please try again later'
   /mobile/shortcode:
     get:
+      summary: Obtains a short code
       tags:
         - Mobile
       parameters:
@@ -1338,19 +1382,29 @@ paths:
                 data: true
 
         '400':
-          description: get shortcode
+          description: bad request - input data missing
           content:
             application/json:
               schema:
                 required:
                   - data
+                  - status
+                  - statusText
+                  - errors
                 properties:
                   data: 
                     type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
               example:
                 data: false
-
-        
+                status: 400
+                statusText: Bad Request
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["email"],"location":"body","messages":["\"token\" is required"],"types":["any.required"]}]}
   /health/ready:
     # todo: fix this up
     get:
