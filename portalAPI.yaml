@@ -1366,7 +1366,6 @@ paths:
           example:
             Authorization: Bearer jwttoken.sdfsdf.sdfsdf
           required: true
-
       responses:
         '200':
           description: get shortcode
@@ -1375,12 +1374,15 @@ paths:
               schema:
                 required:
                   - data
+                  - shortcode
                 properties:
                   data: 
                     type: boolean
+                  shortcode:
+                    type: integer
               example:
                 data: true
-
+                shortcode: 123456
         '400':
           description: bad request - input data missing
           content:
@@ -1405,8 +1407,106 @@ paths:
                 status: 400
                 statusText: Bad Request
                 errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["email"],"location":"body","messages":["\"token\" is required"],"types":["any.required"]}]}
+        '500':
+          description: One of the internal services failed
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data:
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: 'Failed to generate the short code, please try again later'
+    post:
+      summary: Authenticates with a short code
+      tags:
+        - Mobile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+      requestBody:
+        description: Contains the shortcode
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - shortcode
+              properties:
+                shortcode: 
+                  type: integer
+            example:
+              shortcode: 123456
+      responses:
+        '200':
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - jwt
+                properties:
+                  data: 
+                    type: boolean
+                  jwt:
+                    type: string
+              example:
+                data: true
+                jwt: veklhr93849f033ff.ggo39ut3to9bjh389g3.gg095ug90vv390f
+        '400':
+          description: bad request - input data missing
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - status
+                  - statusText
+                  - errors
+                properties:
+                  data: 
+                    type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
+              example:
+                data: false
+                status: 400
+                statusText: Bad Request
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["shortcode"],"location":"body","messages":["\"shortcode\" is required"],"types":["any.required"]}]}
+        '500':
+          description: One of the internal services failed
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data:
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: 'Failed to authenticate the short code, please try again later'
   /health/ready:
-    # todo: fix this up
     get:
       tags:
         - Health
