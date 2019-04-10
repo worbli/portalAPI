@@ -1427,15 +1427,6 @@ paths:
       summary: Authenticates with a short code
       tags:
         - Mobile
-      parameters:
-        - in: header
-          name: Authorization
-          description: Bearer jwtToken
-          schema:
-            type: string
-          example:
-            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
-          required: true
       requestBody:
         description: Contains the shortcode
         required: true
@@ -1467,7 +1458,7 @@ paths:
                 data: true
                 jwt: veklhr93849f033ff.ggo39ut3to9bjh389g3.gg095ug90vv390f
         '400':
-          description: bad request - input data missing
+          description: bad request - input data missing or invalid
           content:
             application/json:
               schema:
