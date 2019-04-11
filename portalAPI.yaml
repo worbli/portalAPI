@@ -1291,14 +1291,22 @@ paths:
               required:
                 - number
                 - message
+                - country
+                - fields
               properties:
                 number: 
                   type: string
                 text:
                   type: string
+                country:
+                  type: string
+                fields:
+                  type: array
             example:
               number: '+15551234567'
               message: Hello, world!
+              country: GBR
+              fields: ['drivers_licence', 'selfie']
       responses:
         '200':
           description: SMS successfully sent
@@ -1438,8 +1446,14 @@ paths:
               properties:
                 shortcode: 
                   type: integer
+                country:
+                  type: string
+                fields:
+                  type: array
             example:
               shortcode: 123456
+              country: GBR
+              fields: ['drivers_licence', 'selfie']
       responses:
         '200':
           description: Successful authentication
@@ -1449,6 +1463,8 @@ paths:
                 required:
                   - data
                   - jwt
+                  - country
+                  - fields
                 properties:
                   data: 
                     type: boolean
