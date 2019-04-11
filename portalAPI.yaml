@@ -1315,11 +1315,15 @@ paths:
               schema:
                 required:
                   - data
+                  - shortcode
                 properties:
                   data: 
                     type: boolean
+                  shortcode:
+                    type: integer
               example:
                 data: true
+                shortcode: 123456
         '400':
           description: bad request - input data missing
           content:
