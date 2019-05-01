@@ -1439,6 +1439,94 @@ paths:
               example:
                 data: false
                 error: 'Failed to send out the SMS, please try again later'
+  /mobile/files:
+    post:
+      summary: Requests files from a mobile device
+      tags:
+        - Mobile
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer jwtToken
+          schema:
+            type: string
+          example:
+            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+          required: true
+      requestBody:
+        description: contains the documents to upload and the country
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - country
+                - fields
+              properties:
+                country:
+                  type: string
+                fields:
+                  type: array
+            example:
+              country: GBR
+              fields: ['drivers_licence', 'selfie']
+      responses:
+        '200':
+          description: data successfully received
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - shortcode
+                properties:
+                  data: 
+                    type: boolean
+                  shortcode:
+                    type: integer
+              example:
+                data: true
+                shortcode: 123456
+        '400':
+          description: bad request - input data missing
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - status
+                  - statusText
+                  - errors
+                properties:
+                  data: 
+                    type: boolean
+                  status:
+                    type: integer
+                  statusText:
+                    type: string
+                  errors:
+                    type: array
+              example:
+                data: false
+                status: 400
+                statusText: Bad Request
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["email"],"location":"body","messages":["\"token\" is required"],"types":["any.required"]}]}
+        '500':
+          description: One of the internal services failed
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                  - error
+                properties:
+                  data:
+                    type: boolean
+                  error:
+                    type: string
+              example:
+                data: false
+                error: 'Failed to send out the SMS, please try again later'
   /mobile/shortcode:
     get:
       summary: Obtains a short code
