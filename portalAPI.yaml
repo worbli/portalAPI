@@ -1358,30 +1358,18 @@ paths:
             Authorization: Bearer jwttoken.sdfsdf.sdfsdf
           required: true
       requestBody:
-        description: contains the number to send to, and the text to send out
+        description: contains the number to send to
         required: true
         content:
           application/json:
             schema:
               required:
                 - number
-                - message
-                - country
-                - fields
               properties:
                 number: 
                   type: string
-                text:
-                  type: string
-                country:
-                  type: string
-                fields:
-                  type: array
             example:
               number: '+15551234567'
-              message: Hello, world!
-              country: GBR
-              fields: ['drivers_licence', 'selfie']
       responses:
         '200':
           description: SMS successfully sent
@@ -1422,7 +1410,7 @@ paths:
                 data: false
                 status: 400
                 statusText: Bad Request
-                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["email"],"location":"body","messages":["\"token\" is required"],"types":["any.required"]}]}
+                errors: {"status":400,"statusText":"Bad Request","errors":[{"field":["token"],"location":"body","messages":["\"token\" is required"],"types":["any.required"]}]}
         '500':
           description: One of the internal services failed
           content:
