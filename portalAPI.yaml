@@ -12,6 +12,9 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/B289/API/1
   - url: '{Protocol}://{Environment}/api/{Version}'
     variables:
       Protocol:
@@ -1619,15 +1622,21 @@ paths:
                   - data
                   - jwt
                   - country
-                  - fields
+                  - files
                 properties:
                   data: 
                     type: boolean
                   jwt:
                     type: string
+                  country:
+                    type: string
+                  files:
+                    type: string
               example:
                 data: true
                 jwt: veklhr93849f033ff.ggo39ut3to9bjh389g3.gg095ug90vv390f
+                country: GBR
+                files: '[{"value":"national_identity_card_reverse","label":"national identity card reverse","uploaded":true, "deviceId": "123456"}]'
         '400':
           description: bad request - input data missing or invalid
           content:
