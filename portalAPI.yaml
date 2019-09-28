@@ -422,16 +422,16 @@ paths:
           required: true
         - in: path
           name: id
-          description: Bearer jwtToken
+          description: The ID of the user for whom to retrieve the profile
           schema:
             type: string
           example:
-            Authorization: Bearer jwttoken.sdfsdf.sdfsdf
+            id: 443z43jkgvgl670
           required: true
 
       responses:
         '200':
-          description: new password response
+          description: Profile retrieved successfully
           content:
             application/json:
               schema:
@@ -444,7 +444,7 @@ paths:
                 email: test@worbli.io
 
         '400':
-          description: new password response
+          description: request failed
           content:
             application/json:
               schema:
